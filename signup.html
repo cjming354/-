@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
+    <title>오늘의레시피: 회원가입</title>
     <style>
         body { 
             background-color: #faf7f4; 
@@ -16,7 +16,7 @@
         /* 전체 회원가입 폼 박스 스타일 */
         .signup-box { 
             margin: 50px auto; 
-            width: 400px;  /* 기존보다 더 넓게 조정 */
+            width: 400px;
             padding: 20px; 
             border: 1px solid #ccc; 
             background: white; 
@@ -35,14 +35,14 @@
 
         /* 라벨 스타일 */
         .input-group label {
-            width: 100px; /* 라벨이 고정된 너비를 가지도록 설정 */
+            width: 100px;
             text-align: left;
             font-weight: bold;
         }
 
         /* 입력 필드 스타일 */
         .input-group input {
-            flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+            flex: 1;
             padding: 8px;
             border: 1px solid #ccc;
         }
@@ -60,7 +60,7 @@
         }
 
         button:hover {
-            background-color: darkblue;
+            background-color: #606a8a;
         }
     </style>
 </head>
@@ -89,6 +89,8 @@
         
         <button onclick="signup()">등록</button>
     </div>
-    
+
+    <!-- Firebase 연결 -->
+    <script type="module" src="app.js"></script>
 </body>
 </html>
