@@ -33,6 +33,21 @@ def korean_food_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'blog/koreanfood.html', {'recipes': recipes})
 
+def ko_food(request):
+    return render(request,'blog/koreanfood.html')
+
+def ja_food(request):
+    return render(request,'blog/koreanfood.html')
+
+def ch_food(request):
+    return render(request,'blog/koreanfood.html')
+
+def de_food(request):
+    return render(request,'blog/koreanfood.html')
+
+def we_food(request):
+    return render(request,'blog/koreanfood.html')
+
 def signup(request):
     if request.method == 'POST':
         nickname = request.POST['nickname']
