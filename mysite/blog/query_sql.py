@@ -25,7 +25,7 @@ def select_nickname_by_id():
 
 def select_password_from_users():
     sql ="""
-    SELECT password from users where password = %s AND user_id = %s
+    SELECT password from users where nickname = %s
     """
     return sql
 

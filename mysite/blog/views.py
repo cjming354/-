@@ -5,6 +5,7 @@ import pymysql
 from flask_wtf.csrf import CSRFProtect
 from blog import query_sql as q
 from .models import Recipe
+from django.contrib.auth.hashers import check_password
 
 # DB 연결 함수
 def mysql_rdb_conn():
@@ -73,3 +74,49 @@ def signup(request):
             return redirect('signup')
 
     return render(request, 'blog/signup.html')
+
+def login(request):
+    if request.method == 'POST':
+        nickname = request.POST['nickname']
+        password = request.POST['password']
+
+        # 닉네임 입력 확인
+        if not nickname:
+            messages.error(request, "닉네임을 입력하세요.")
+            return redirect('home')
+
+        # 비밀번호 입력 확인
+        if not password:
+            messages.error(request, "비밀번호를 입력하세요.")
+            return redirect('home')
+
+        try:
+            with mysql_rdb_conn() as conn:
+                with conn.cursor() as curs:
+
+                    # 닉네임있나 체크
+                    nickname_chk = q.select_nickname_from_users()
+                    curs.execute(nickname_chk, (nickname,))
+                    if curs.fetchone() is None:
+                        messages.error(request, "아이디가 없습니다.")
+                        return redirect('home')
+
+                    # 비밀번호 맞나 체크
+                    password_chk = q.select_password_from_users()
+                    curs.execute(password_chk, (nickname,))
+                    row = curs.fetchone()
+
+                    db_password = row[0] if row else None  # DB에서 가져온 비밀번호
+
+                    # 평문 비밀번호 비교
+                    if db_password is None or password != db_password:
+                        messages.error(request, "비밀번호가 틀립니다.")
+                        return redirect('home')
+
+                    messages.success(request, "로그인이 완료되었습니다!")
+                    return redirect('main')  # 로그인 성공하면 메인 페이지로
+
+        except Exception as e:
+            messages.error(request, f"Unexpected error: {e}")
+            return redirect('home')
+    return render(request, 'home')
